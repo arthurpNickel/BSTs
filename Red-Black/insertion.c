@@ -100,26 +100,52 @@ NoRB *insert_RB (Tree *T, NoRB *z)
     //Q: tem que fazer pinturas aqui?
 }
 
-void *insert_fixup_RB()
+void *insert_fixup_RB(Tree *T, NoRB *z)
 {
     //...
 
-    //apontamentos... -> pai, avo e tio
-
     //OBS pai necessariamente é vermelho
 
-    //Se tio for vemelho
-        //pinta pai e tio de preto
-        //pinta avô de vermelho -> joga problema para cima
-        //x = avô
-    
-    //tio preto
-    //x, x.p e x.p.p formam triângulo
-        //rotação simples no pai de x
-    
-    //x, x.p e x.p.p formam reta
-        //rotação simples no vo de x
-        //pinta pai de preto e avô de vermelho??
+    //Enquanto ... x.p vermelho?
+    while ( z != T->root && z->father->color == RED ) //ERRO: Não existe essa primeira condição
+    {
+        if ( z->father == z->father->father->left )  //Se z.p é filho esquerda
+        {
+            //SUGESTÃO: Aqui era interessante declarar o tio de z
+            if ( z->father->father->right->color == RED ) //Se tio for vemelho
+            {
+                //pinta pai e tio de preto
+                z->father->color = BLACK;
+                z->father->father->right->color = BLACK;
 
-    //onde faço a identificação do lado??
+                //pinta avô de vermelho -> joga problema para cima
+                z->father->father->color = RED;
+                
+                z = z->father->father;
+            }
+            //tio preto
+            else if ( z == z->father->right ) //x, x.p e x.p.p formam triângulo
+            {
+                rot_left(T, z->father);//rotação simples no pai de x
+                z = z->father;
+            }
+            //SUGESTÃO: Como o else if sempre cairá no else na próxima iteração, poderia se juntar em um caso só
+            //onde executaria condicionalmente o else if, mas sempre o else
+
+            else //x, x.p e x.p.p formam reta
+            {
+                rot_right(T, z->father->father);    //rotação simples no vo de x
+                z->father = BLACK;
+                z->father->father = RED;
+                z = T->root;
+            }
+        }
+        else //x.p é filho direita
+        {
+            //simétrico
+        }
+
+        //ERRO: T.root.color = black
+            //Esqueci dessa parte -> vai que a raiz é pintada de vermelho pelo primeiro caso
+    }
 }
