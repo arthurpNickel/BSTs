@@ -7,7 +7,7 @@
 typedef struct tree
 {
     NoRB *root;
-    //nil?
+    NoRB *nil;
 } Tree;
 
 typedef struct noRB
@@ -100,7 +100,26 @@ NoRB *insert_RB (Tree *T, NoRB *z)
     //Q: tem que fazer pinturas aqui?
 }
 
-NoRB *insert_fixup()
+void *insert_fixup_RB()
 {
+    //...
+
+    //apontamentos... -> pai, avo e tio
+
+    //OBS pai necessariamente é vermelho
+
+    //Se tio for vemelho
+        //pinta pai e tio de preto
+        //pinta avô de vermelho -> joga problema para cima
+        //x = avô
     
+    //tio preto
+    //x, x.p e x.p.p formam triângulo
+        //rotação simples no pai de x
+    
+    //x, x.p e x.p.p formam reta
+        //rotação simples no vo de x
+        //pinta pai de preto e avô de vermelho??
+
+    //onde faço a identificação do lado??
 }
